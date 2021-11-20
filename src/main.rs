@@ -1,4 +1,4 @@
-enum CellNames { 
+enum CellNames {
 A8, B8, C8, D8, E8, F8, G8, H8,
 A7, B7, C7, D7, E7, F7, G7, H7,
 A6, B6, C6, D6, E6, F6, G6, H6,
@@ -14,7 +14,7 @@ fn get_bit(bitboard: u64, square: u64) -> bool {
 }
 
 fn set_bit(bitboard: &mut u64, square:u64) {
-    bitboard = bitboard | (1 << square);
+    *bitboard |= 1 << square;
 }
 
 fn print_bitboard (bitboard: u64) {
@@ -34,6 +34,6 @@ fn print_bitboard (bitboard: u64) {
 fn main() {
     println!("Hyper Ferris 0.1.0\n");
     let mut bitboard: u64 = 0;
-    set_bit(&mut bitboard, CellNames::A4 as u64);
+    set_bit(&mut bitboard, CellNames::H4 as u64);
     print_bitboard(bitboard);
 }
