@@ -32,8 +32,11 @@ fn print_bitboard (bitboard: u64) {
 }
 
 fn main() {
-    println!("Hyper Ferris 0.1.0\n");
+    println!("\n\n   Hyper Ferris 0.1.0\n");
     let mut bitboard: u64 = 0;
     set_bit(&mut bitboard, CellNames::H4 as u64);
+    set_bit(&mut bitboard, CellNames::B5 as u64);
     print_bitboard(bitboard);
+    bitboard ^= 1 << CellNames::H4 as u64;
+    print_bitboard(bitboard)
 }
