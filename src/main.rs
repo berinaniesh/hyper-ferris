@@ -9,6 +9,19 @@ A2, B2, C2, D2, E2, F2, G2, H2,
 A1, B1, C1, D1, E1, F1, G1, H1,
 }
 
+//Useful Constants
+
+//Side to move constant
+const WHITE: i8 = 0;
+const BLACK: i8 = 1;
+
+//Not specific file constants (for attack tables)
+
+
+
+
+// Bit manipulation functions
+//=============================================================================
 fn get_bit(bitboard: u64, square: u64) -> bool {
     return if bitboard & (1 << square) > 0 {true} else {false};
 }
@@ -20,6 +33,8 @@ fn set_bit(bitboard: &mut u64, square: u64) {
 fn pop_bit(bitboard: &mut u64, square: u64) {
     if get_bit(*bitboard, square) {*bitboard ^= 1 << square;} else {return};
 }
+//=============================================================================
+
 
 fn print_bitboard (bitboard: u64) {
     for rank in 0..8 {
