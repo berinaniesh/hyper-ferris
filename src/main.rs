@@ -18,7 +18,7 @@ fn set_bit(bitboard: &mut u64, square: u64) {
 }
 
 fn pop_bit(bitboard: &mut u64, square: u64) {
-    *bitboard ^= 1 << square;
+    if get_bit(*bitboard, square) {*bitboard ^= 1 << square;} else {return};
 }
 
 fn print_bitboard (bitboard: u64) {
@@ -39,8 +39,5 @@ fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
     let mut bitboard: u64 = 0;
     set_bit(&mut bitboard, CellNames::H4 as u64);
-    set_bit(&mut bitboard, CellNames::B5 as u64);
-    print_bitboard(bitboard);
-    pop_bit(&mut bitboard, CellNames::H4 as u64);
     print_bitboard(bitboard)
 }
