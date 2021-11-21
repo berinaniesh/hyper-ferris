@@ -13,8 +13,12 @@ fn get_bit(bitboard: u64, square: u64) -> bool {
     return if bitboard & (1 << square) > 0 {true} else {false};
 }
 
-fn set_bit(bitboard: &mut u64, square:u64) {
+fn set_bit(bitboard: &mut u64, square: u64) {
     *bitboard |= 1 << square;
+}
+
+fn pop_bit(bitboard: &mut u64, square: u64) {
+    *bitboard ^= 1 << square;
 }
 
 fn print_bitboard (bitboard: u64) {
@@ -37,6 +41,6 @@ fn main() {
     set_bit(&mut bitboard, CellNames::H4 as u64);
     set_bit(&mut bitboard, CellNames::B5 as u64);
     print_bitboard(bitboard);
-    bitboard ^= 1 << CellNames::H4 as u64;
+    pop_bit(&mut bitboard, CellNames::H4 as u64);
     print_bitboard(bitboard)
 }
