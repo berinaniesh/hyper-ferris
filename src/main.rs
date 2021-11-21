@@ -16,6 +16,10 @@ const WHITE: i8 = 0;
 const BLACK: i8 = 1;
 
 //Not specific file constants (for attack tables)
+const NOT_A_FILE: u64 = 18374403900871474942;
+const NOT_B_FILE: u64 = 18302063728033398269;
+const NOT_G_FILE: u64 = 13816973012072644543;
+const NOT_H_FILE: u64 = 9187201950435737471;
 
 
 
@@ -53,6 +57,13 @@ fn print_bitboard (bitboard: u64) {
 fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
     let mut bitboard: u64 = 0;
-    set_bit(&mut bitboard, CellNames::H4 as u64);
-    print_bitboard(bitboard)
+    for rank in 0..8 {
+        for file in 0..8 {
+            let square = rank * 8 + file;
+            if file !=1 {
+                set_bit(&mut bitboard, square);
+            }
+        }
+    }
+    print_bitboard(bitboard);
 }
