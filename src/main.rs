@@ -1,18 +1,31 @@
 mod constants;
 
-fn mask_attack_squares (bitboard: &mut u64, square: u64, side: i8) {
-    let attack: u64 = 0;
-
-    if side == 0 {
-        //*bitboard 
+fn init_attack_tables (){
+    unsafe {
+        for side in 0..2 {
+            for square in 0..64 {
+                let mut bitboard: u64 = 0;
+                set_bit(&mut bitboard, square as u64);
+                constants::PAWN_ATTACKS[side][square] = mask_attack_squares(bitboard, side as usize);
+            }
+        }
     }
-    else {
 
-    }
 }
 
-// Bit manipulation functions
-//=============================================================================
+fn mask_attack_squares (bitboard: u64, side: usize) -> u64 {
+    let mut attacks: u64 = 0;
+    if side == constants::WHITE {
+        if (constants::NOT_A_FILE & bitboard >> 7) > 0 {attacks |= bitboard >> 7};
+        if (constants::NOT_H_FILE & bitboard >> 9) > 0 {attacks |= bitboard >> 9};
+    }
+    else {
+        if (constants::NOT_A_FILE & bitboard << 9) > 0 {attacks |= bitboard << 9};
+         if (constants::NOT_H_FILE & bitboard << 7) > 0 {attacks |= bitboard << 7};
+    }
+    return attacks;
+}
+
 fn get_bit(bitboard: u64, square: u64) -> bool {
     return if bitboard & (1 << square) > 0 {true} else {false};
 }
@@ -24,8 +37,6 @@ fn set_bit(bitboard: &mut u64, square: u64) {
 fn pop_bit(bitboard: &mut u64, square: u64) {
     if get_bit(*bitboard, square) {*bitboard ^= 1 << square;} else {return};
 }
-//=============================================================================
-
 
 fn print_bitboard (bitboard: u64) {
     for rank in 0..8 {
@@ -42,8 +53,5 @@ fn print_bitboard (bitboard: u64) {
 
 fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
-    let mut bitboard: u64 = 0;
-    bitboard |= 1 << constants::f4;
-    print_bitboard(bitboard);
-
+    init_attack_tables();
 }
