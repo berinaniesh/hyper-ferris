@@ -6,14 +6,14 @@ fn init_attack_tables (){
             for square in 0..64 {
                 let mut bitboard: u64 = 0;
                 set_bit(&mut bitboard, square as u64);
-                constants::PAWN_ATTACKS[side][square] = mask_attack_squares(bitboard, side as usize);
+                constants::PAWN_ATTACKS[side][square] = set_pawn_attack_squares(bitboard, side as usize);
             }
         }
     }
 
 }
 
-fn mask_attack_squares (bitboard: u64, side: usize) -> u64 {
+fn set_pawn_attack_squares (bitboard: u64, side: usize) -> u64 {
     let mut attacks: u64 = 0;
     if side == constants::WHITE {
         if (constants::NOT_A_FILE & bitboard >> 7) > 0 {attacks |= bitboard >> 7};
