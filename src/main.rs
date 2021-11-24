@@ -4,17 +4,22 @@ fn init_attack_tables (){
     unsafe {
         for side in 0..2 {
             for square in 0..64 {
-                let mut bitboard: u64 = 0;
-                set_bit(&mut bitboard, square as u64);
-                constants::PAWN_ATTACKS[side][square] = set_pawn_attack_squares(bitboard, side as usize);
+                constants::PAWN_ATTACKS[side][square] = set_pawn_attack_squares(side, square as u64);
+                constants::KNIGHT_ATTACKS[side][square] = set_knight_attack_squares(side, square as u64);
+                constants::BISHOP_ATTACKS[side][square] = set_bishop_attack_squares(side, square as u64);
+                constants::ROOK_ATTACKS[side][square] = set_rook_attack_squares(side, square as u64);
+                constants::QUEEN_ATTACKS[side][square] = set_queen_attack_squares(side, square as u64);
+                constants::KING_ATTACKS[side][square] = set_king_attack_squares(side, square as u64);
             }
         }
     }
 
 }
 
-fn set_pawn_attack_squares (bitboard: u64, side: usize) -> u64 {
+fn set_pawn_attack_squares (side: usize, square: u64) -> u64 {
     let mut attacks: u64 = 0;
+    let mut bitboard: u64 = 0;
+    set_bit(& mut bitboard, square);
     if side == constants::WHITE {
         if (constants::NOT_A_FILE & bitboard >> 7) > 0 {attacks |= bitboard >> 7};
         if (constants::NOT_H_FILE & bitboard >> 9) > 0 {attacks |= bitboard >> 9};
@@ -24,6 +29,26 @@ fn set_pawn_attack_squares (bitboard: u64, side: usize) -> u64 {
          if (constants::NOT_H_FILE & bitboard << 7) > 0 {attacks |= bitboard << 7};
     }
     return attacks;
+}
+
+fn set_knight_attack_squares (side: usize, square: u64) -> u64 {
+    return 0;
+}
+
+fn set_bishop_attack_squares (side: usize, square: u64) -> u64 {
+    return 0;
+}
+
+fn set_rook_attack_squares (side: usize, square: u64) -> u64 {
+    return 0;
+}
+
+fn set_queen_attack_squares (side: usize, square: u64) -> u64 {
+    return 0;
+}
+
+fn set_king_attack_squares (side: usize, square: u64) -> u64 {
+    return 0;
 }
 
 fn get_bit(bitboard: u64, square: u64) -> bool {

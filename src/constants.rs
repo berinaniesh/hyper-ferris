@@ -1,3 +1,5 @@
+//board constants
+//============================================================
 pub const a8: usize = 0;
 pub const b8: usize = 1;
 pub const c8: usize = 2;
@@ -82,4 +84,12 @@ pub const NOT_AB_FILE: u64 = 18229723555195321596;
 pub const NOT_HG_FILE: u64 = 4557430888798830399;
 pub const NOT_H_FILE: u64 = 9187201950435737471;
 
+
+//attack tables
+//============================================================
 pub static mut PAWN_ATTACKS:[[u64;64];2] = [[0;64];2];
+pub static mut KNIGHT_ATTACKS:[[u64;64];2] = [[0;64];2];
+pub static mut BISHOP_ATTACKS:[[u64;64];2] = [[0;64];2];
+pub static mut ROOK_ATTACKS:[[u64;64];2] = [[0;64];2];
+pub static mut QUEEN_ATTACKS:[[u64;64];2] = [[0;64];2];
+pub static mut KING_ATTACKS:[[u64;64];2] = [[0;64];2];
