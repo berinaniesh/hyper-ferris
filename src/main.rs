@@ -21,12 +21,12 @@ fn set_pawn_attack_squares (side: usize, square: u64) -> u64 {
     let mut bitboard: u64 = 0;
     set_bit(& mut bitboard, square);
     if side == constants::WHITE {
-        if (constants::NOT_A_FILE & bitboard >> 7) > 0 {attacks |= bitboard >> 7};
-        if (constants::NOT_H_FILE & bitboard >> 9) > 0 {attacks |= bitboard >> 9};
+        if (constants::NOT_A_FILE & (bitboard >> 7)) > 0 {attacks |= bitboard >> 7};
+        if (constants::NOT_H_FILE & (bitboard >> 9)) > 0 {attacks |= bitboard >> 9};
     }
     else {
-        if (constants::NOT_A_FILE & bitboard << 9) > 0 {attacks |= bitboard << 9};
-         if (constants::NOT_H_FILE & bitboard << 7) > 0 {attacks |= bitboard << 7};
+        if (constants::NOT_A_FILE & (bitboard << 9)) > 0 {attacks |= bitboard << 9};
+         if (constants::NOT_H_FILE & (bitboard << 7)) > 0 {attacks |= bitboard << 7};
     }
     return attacks;
 }
