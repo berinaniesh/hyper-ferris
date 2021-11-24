@@ -88,8 +88,8 @@ pub const NOT_H_FILE: u64 = 9187201950435737471;
 //attack tables
 //============================================================
 pub static mut PAWN_ATTACKS:[[u64;64];2] = [[0;64];2];
-pub static mut KNIGHT_ATTACKS:[[u64;64];2] = [[0;64];2];
-pub static mut BISHOP_ATTACKS:[[u64;64];2] = [[0;64];2];
-pub static mut ROOK_ATTACKS:[[u64;64];2] = [[0;64];2];
-pub static mut QUEEN_ATTACKS:[[u64;64];2] = [[0;64];2];
-pub static mut KING_ATTACKS:[[u64;64];2] = [[0;64];2];
+pub static mut KNIGHT_ATTACKS:[u64;64] = [0;64];
+pub static mut BISHOP_ATTACKS:[u64;64] = [0;64];
+pub static mut ROOK_ATTACKS:[u64;64] = [0;64];
+pub static mut QUEEN_ATTACKS:[u64;64] = [0;64];
+pub static mut KING_ATTACKS:[u64;64] = [0;64];
