@@ -5,11 +5,13 @@ fn init_attack_tables (){
         for side in 0..2 {
             for square in 0..64 {
                 constants::PAWN_ATTACKS[side][square] = set_pawn_attack_squares(side, square as u64);
-                constants::KNIGHT_ATTACKS[square] = set_knight_attack_squares(square as u64);
-                constants::BISHOP_ATTACKS[square] = set_bishop_attack_squares(square as u64);
-                constants::ROOK_ATTACKS[square] = set_rook_attack_squares(square as u64);
-                constants::QUEEN_ATTACKS[square] = set_queen_attack_squares(square as u64);
-                constants::KING_ATTACKS[square] = set_king_attack_squares(square as u64);
+                if side == 1 {
+                    constants::KNIGHT_ATTACKS[square] = set_knight_attack_squares(square as u64);
+                    constants::BISHOP_ATTACKS[square] = set_bishop_attack_squares(square as u64);
+                    constants::ROOK_ATTACKS[square] = set_rook_attack_squares(square as u64);
+                    constants::QUEEN_ATTACKS[square] = set_queen_attack_squares(square as u64);
+                    constants::KING_ATTACKS[square] = set_king_attack_squares(square as u64);
+                }    
             }
         }
     }
@@ -32,7 +34,18 @@ fn set_pawn_attack_squares (side: usize, square: u64) -> u64 {
 }
 
 fn set_knight_attack_squares (square: u64) -> u64 {
-    return 0;
+    let mut attacks: u64 = 0;
+    let mut bitboard: u64 = 0;
+    set_bit(&mut bitboard, square);
+    if (constants::NOT_A_FILE & (bitboard >> 15)) > 0 {attacks |= bitboard >> 15};
+    if (constants::NOT_H_FILE & (bitboard >> 17)) > 0 {attacks |= bitboard >> 17};
+    if (constants::NOT_AB_FILE & (bitboard >> 6)) > 0 {attacks |= bitboard >> 6};
+    if (constants::NOT_GH_FILE & (bitboard >> 10)) > 0 {attacks |= bitboard >> 10};
+    if (constants::NOT_A_FILE & (bitboard << 17)) > 0 {attacks |= bitboard << 17};
+    if (constants::NOT_H_FILE & (bitboard << 15)) > 0 {attacks |= bitboard << 15};
+    if (constants::NOT_AB_FILE & (bitboard << 10)) > 0 {attacks |= bitboard << 10};
+    if (constants::NOT_GH_FILE & (bitboard << 6)) > 0 {attacks |= bitboard << 6};
+    return attacks;
 }
 
 fn set_bishop_attack_squares (square: u64) -> u64 {
@@ -79,4 +92,9 @@ fn print_bitboard (bitboard: u64) {
 fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
     init_attack_tables();
+    unsafe {
+    for square in 0..64 {
+        print_bitboard(constants::KNIGHT_ATTACKS[square]);
+    }   
+}
 }
