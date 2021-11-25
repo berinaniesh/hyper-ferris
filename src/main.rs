@@ -1,23 +1,5 @@
 mod constants;
 
-fn init_attack_tables (){
-    unsafe {
-        for side in 0..2 {
-            for square in 0..64 {
-                constants::PAWN_ATTACKS[side][square] = set_pawn_attack_squares(side, square as u64);
-                if side == 1 {
-                    constants::KNIGHT_ATTACKS[square] = set_knight_attack_squares(square as u64);
-                    constants::BISHOP_ATTACKS[square] = set_bishop_attack_squares(square as u64);
-                    constants::ROOK_ATTACKS[square] = set_rook_attack_squares(square as u64);
-                    constants::QUEEN_ATTACKS[square] = set_queen_attack_squares(square as u64);
-                    constants::KING_ATTACKS[square] = set_king_attack_squares(square as u64);
-                }    
-            }
-        }
-    }
-
-}
-
 fn set_pawn_attack_squares (side: usize, square: u64) -> u64 {
     let mut attacks: u64 = 0;
     let mut bitboard: u64 = 0;
@@ -91,10 +73,8 @@ fn print_bitboard (bitboard: u64) {
 
 fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
-    init_attack_tables();
-    unsafe {
     for square in 0..64 {
         print_bitboard(constants::KNIGHT_ATTACKS[square]);
-    }   
+        //println!("{},", constants::PAWN_ATTACKS[1][square]);  
 }
 }
