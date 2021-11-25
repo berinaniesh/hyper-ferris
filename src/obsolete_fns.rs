@@ -46,3 +46,18 @@ fn set_pawn_attack_squares (side: usize, square: u64) -> u64 {
     return attacks;
 }
 
+fn set_knight_attack_squares (square: u64) -> u64 {
+    return 0;
+    let mut attacks: u64 = 0;
+    let mut bitboard: u64 = 0;
+    set_bit(&mut bitboard, square);
+    if (constants::NOT_A_FILE & (bitboard >> 15)) > 0 {attacks |= bitboard >> 15};
+    if (constants::NOT_H_FILE & (bitboard >> 17)) > 0 {attacks |= bitboard >> 17};
+    if (constants::NOT_AB_FILE & (bitboard >> 6)) > 0 {attacks |= bitboard >> 6};
+    if (constants::NOT_GH_FILE & (bitboard >> 10)) > 0 {attacks |= bitboard >> 10};
+    if (constants::NOT_A_FILE & (bitboard << 17)) > 0 {attacks |= bitboard << 17};
+    if (constants::NOT_H_FILE & (bitboard << 15)) > 0 {attacks |= bitboard << 15};
+    if (constants::NOT_AB_FILE & (bitboard << 10)) > 0 {attacks |= bitboard << 10};
+    if (constants::NOT_GH_FILE & (bitboard << 6)) > 0 {attacks |= bitboard << 6};
+    return attacks;
+}
