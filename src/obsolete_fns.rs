@@ -103,3 +103,41 @@ fn set_bishop_attack_squares (square: i64) -> u64 {
 
     return attacks;
 }
+
+fn set_rook_attack_squares (square: i64) -> u64 {
+    let mut attacks = 0;
+    let tr = square/8;
+    let tf = square%8;
+    let mut rank;
+    let mut file;
+
+    rank = tr+1;
+    file = tf;
+    while rank < 7 {
+        attacks |= 1<<(rank*8 + file);
+        rank +=1;
+    }
+
+    rank = tr - 1;
+    file = tf;
+    while rank > 0 {
+        attacks |= 1<<(rank*8 + file);
+        rank -= 1;
+    }
+
+    rank = tr;
+    file = tf - 1;
+    while file > 0 {
+        attacks |= 1<<(rank*8 + file);
+        file -=1;
+    }
+
+    rank = tr;
+    file = tf + 1;
+    while file < 7 {
+        attacks |= 1<<(rank*8 + file);
+        file += 1;
+    }
+
+    return attacks;
+}
