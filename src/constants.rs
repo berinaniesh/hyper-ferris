@@ -287,9 +287,6 @@ pub const KNIGHT_ATTACKS:[u64;64] = [
 4679521487814656,
 9077567998918656
 ];
-pub static mut BISHOP_ATTACKS:[u64;64] = [0;64];
-pub static mut ROOK_ATTACKS:[u64;64] = [0;64];
-pub static mut QUEEN_ATTACKS:[u64;64] = [0;64];
 pub const KING_ATTACKS:[u64;64] = [
 770,
 1797,
@@ -356,3 +353,7 @@ pub const KING_ATTACKS:[u64;64] = [
 11592265440851656704,
 4665729213955833856,
 ];
+
+pub static mut BISHOP_ATTACKS:[u64;64] = [0;64];
+pub static mut ROOK_ATTACKS:[u64;64] = [0;64];
+pub static mut QUEEN_ATTACKS:[u64;64] = [0;64];

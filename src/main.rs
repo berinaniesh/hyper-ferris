@@ -1,15 +1,34 @@
 mod constants;
 
 fn set_bishop_attack_squares (square: u64) -> u64 {
-    return 0;
-}
+    let mut attacks: u64 = constants::PAWN_ATTACKS[0][constants::d4];
+    let mut bitboard: u64 = 0;
+    let tr = square/8;
+    let tf = square%8;
+/*
+    for (r = tr + 1, f = tf + 1; r <= 6 && f <= 6; r++, f++) attacks |= (1ULL << (r * 8 + f));
+    for (r = tr - 1, f = tf + 1; r >= 1 && f <= 6; r--, f++) attacks |= (1ULL << (r * 8 + f));
+    for (r = tr + 1, f = tf - 1; r <= 6 && f >= 1; r++, f--) attacks |= (1ULL << (r * 8 + f));
+    for (r = tr - 1, f = tf - 1; r >= 1 && f >= 1; r--, f--) attacks |= (1ULL << (r * 8 + f));
 
-fn set_rook_attack_squares (square: u64) -> u64 {
-    return 0;
-}
+    let (x, y) = (1, 3);
+    for (a, b) in (x+1..=6).zip(y+1..=6) {
+        println!("{} {}", a, b);
+    }
 
-fn set_queen_attack_squares (square: u64) -> u64 {
-    return 0;
+*/
+
+
+    
+    let mut rank = tr+1;
+    let mut file = tf+1;
+    let one:u64 = 1;
+    while (rank < 7 && file < 7){
+        attacks |= 1 << (rank*8 + file);
+        rank++;
+        file++;
+    }
+    return attacks;
 }
 
 fn get_bit(bitboard: u64, square: u64) -> bool {
@@ -39,4 +58,11 @@ fn print_bitboard (bitboard: u64) {
 
 fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
+    /*unsafe {
+        for square in 0..64 {
+            constants::BISHOP_ATTACKS[square] = set_bishop_attack_squares (square as u64);
+            print_bitboard(constants::BISHOP_ATTACKS[square]);
+        }
+    }*/
+    print_bitboard(set_bishop_attack_squares(constants::d4 as u64));
 }
