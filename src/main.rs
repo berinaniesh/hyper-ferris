@@ -1,6 +1,6 @@
 mod constants;
 
-fn set_bishop_attack_squares (square: u64) -> u64 {
+fn set_bishop_attack_squares (square: i64) -> u64 {
     let mut attacks = 0;
     let tr = square/8;
     let tf = square%8;
@@ -71,7 +71,7 @@ fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
     unsafe {
         for square in 0..64 {
-            constants::BISHOP_ATTACKS[square] = set_bishop_attack_squares(square as u64);
+            constants::BISHOP_ATTACKS[square] = set_bishop_attack_squares(square as i64);
             print_bitboard(constants::BISHOP_ATTACKS[square]);
         }
     }
