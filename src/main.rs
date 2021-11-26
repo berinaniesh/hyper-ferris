@@ -72,7 +72,7 @@ fn main() {
     unsafe {
         for square in 0..64 {
             constants::BISHOP_ATTACKS[square] = set_bishop_attack_squares(square as i64);
-            print_bitboard(constants::BISHOP_ATTACKS[square]);
+            println!("{},", constants::BISHOP_ATTACKS[square]);
         }
     }
 }
