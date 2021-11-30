@@ -88,6 +88,8 @@ fn magic_rook_attacks (square: i64, blocker: u64) -> u64 {
     return attacks;
 }
 
+
+
 fn get_bit(bitboard: u64, square: u64) -> bool {
     return if bitboard & (1 << square) > 0 {true} else {false};
 }
@@ -98,6 +100,12 @@ fn set_bit(bitboard: &mut u64, square: u64) {
 
 fn pop_bit(bitboard: &mut u64, square: u64) {
     if get_bit(*bitboard, square) {*bitboard ^= 1 << square;} else {return};
+}
+
+fn pop_least_significant_bit(bitboard: &mut u64) {
+    if *bitboard > 0 {
+        *bitboard &= *bitboard - 1;
+    }
 }
 
 fn print_bitboard (bitboard: u64) {
@@ -113,10 +121,7 @@ fn print_bitboard (bitboard: u64) {
     println!("  Bitboard: {}\n\n",bitboard);
 }
 
+
 fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
-    let mut blocker = 0;
-    set_bit(&mut blocker, constants::c5 as u64);
-    print_bitboard(magic_bishop_attacks(35, blocker));
-
 }
