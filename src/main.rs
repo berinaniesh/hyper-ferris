@@ -103,16 +103,14 @@ fn pop_bit(bitboard: &mut u64, square: u64) {
 }
 
 fn pop_least_significant_bit(bitboard: &mut u64) {
-    //if *bitboard > 0 {
-        *bitboard &= *bitboard - 1;
-    //}
+        if *bitboard > 0 {*bitboard &= *bitboard - 1;}
 }
 
 fn count_no_of_set_bits (mut bitboard: u64) -> u8 {
     let mut count: u8 = 0;
     while bitboard > 0 {
         count = count + 1;
-        pop_least_significant_bit(&mut bitboard)
+        bitboard &= bitboard -1;
     }
     return count;
 }
