@@ -131,4 +131,10 @@ fn print_bitboard (bitboard: u64) {
 
 fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
+    let mut bitboard: u64 = 0;
+    set_bit(&mut bitboard, 44);
+    set_bit(&mut bitboard, 22);
+    set_bit(&mut bitboard, 13);
+    print_bitboard(bitboard);
+    print_bitboard(bitboard & -bitboard);
 }
