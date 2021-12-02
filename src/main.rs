@@ -135,6 +135,5 @@ fn main() {
     set_bit(&mut bitboard, 44);
     set_bit(&mut bitboard, 22);
     set_bit(&mut bitboard, 13);
-    print_bitboard(bitboard);
-    print_bitboard(bitboard & -bitboard);
+    println!("{}", count_no_of_set_bits(bitboard));
 }
