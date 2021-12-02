@@ -88,8 +88,6 @@ fn magic_rook_attacks (square: i64, blocker: u64) -> u64 {
     return attacks;
 }
 
-
-
 fn get_bit(bitboard: u64, square: u64) -> bool {
     return if bitboard & (1 << square) > 0 {true} else {false};
 }
@@ -115,6 +113,18 @@ fn count_no_of_set_bits (mut bitboard: u64) -> u8 {
     return count;
 }
 
+fn find_least_significant_bit (bitboard: u64) -> usize {
+    //Take care not to run this fn with bitboard = 0, it gives a wrong answer.
+    let mut count: usize = 0;
+    let mut number: u64 = 1;
+    if bitboard == 0 {return 0};
+    while bitboard & number == 0 {
+        count += 1;
+        number = number << 1;
+    }
+    return count;
+}
+
 fn print_bitboard (bitboard: u64) {
     for rank in 0..8 {
         print!("{}   ", 8-rank);
@@ -132,8 +142,5 @@ fn print_bitboard (bitboard: u64) {
 fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
     let mut bitboard: u64 = 0;
-    set_bit(&mut bitboard, 44);
-    set_bit(&mut bitboard, 22);
-    set_bit(&mut bitboard, 13);
-    println!("{}", count_no_of_set_bits(bitboard));
+    set_bit(&mut bitboard, constants::d4 as u64);
 }

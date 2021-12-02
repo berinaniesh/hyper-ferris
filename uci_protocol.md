@@ -31,7 +31,7 @@
 
 The move format is in long algebraic notation.
 A nullmove from the Engine to the GUI should be sent as 0000.
-Examples:  e2e4, e7e5, e1g1 (white short castling), e7e8q (for promotion)
+Examples:  e2e4, e7e5, e1g1 (white short castling), e7e8q (for promotion).
 
 ## GUI to engine:
 
@@ -140,8 +140,7 @@ These are all the command the engine gets from the interface.
 + Quit the program as soon as possible.
 
 
-Engine to GUI:
---------------
+## Engine to GUI:
 
 * id
 	* name <x>
