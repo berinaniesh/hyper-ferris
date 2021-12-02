@@ -81,74 +81,63 @@ These are all the command the engine gets from the interface.
 	- "register later"
 	- "register name Stefan MK code 4359874324"
 
-* ucinewgame
-   this is sent to the engine when the next search (started with "position" and "go") will be from
-   a different game. This can be a new game the engine should play or a new game it should analyse but
-   also the next position from a testsuite with positions only.
-   If the GUI hasn't sent a "ucinewgame" before the first "position" command, the engine shouldn't
-   expect any further ucinewgame commands as the GUI is probably not supporting the ucinewgame command.
-   So the engine should not rely on this command even though all new GUIs should support it.
-   As the engine's reaction to "ucinewgame" can take some time the GUI should always send "isready"
-   after "ucinewgame" to wait for the engine to finish its operation.
+### ucinewgame
++ This is sent to the engine when the next search (started with "position" and "go") will be from a different game. This can be a new game the engine should play or a new game it should analyze but also the next position from a testsuite with positions only.
++ If the GUI hasn't sent a "ucinewgame" before the first "position" command, the engine shouldn't expect any further "ucinewgame" commands as the GUI is probably not supporting the "ucinewgame" command.
++ So the engine should not rely on this command even though all new GUIs should support it.
++ As the engine's reaction to "ucinewgame" can take some time the GUI should always send "isready" after "ucinewgame" to wait for the engine to finish its operation.
    
-* position [fen <fenstring> | startpos ]  moves <move1> .... <movei>
-	set up the position described in fenstring on the internal board and
-	play the moves on the internal chess board.
-	if the game was played  from the start position the string "startpos" will be sent
-	Note: no "new" command is needed. However, if this position is from a different game than
-	the last position sent to the engine, the GUI should have sent a "ucinewgame" inbetween.
+### position [fen <fenstring> | startpos ] moves <move1> .... <movei>
++ Set up the position described in fenstring on the internal board and play the moves on the internal chess board.
++ If the game was played from the start position the string "startpos" will be sent.
++ Note that no "new" command is needed. However, if this position is from a different game than the last position sent to the engine, the GUI should have sent a "ucinewgame" in between.
 
-* go
-	start calculating on the current position set up with the "position" command.
-	There are a number of commands that can follow this command, all will be sent in the same string.
-	If one command is not sent its value should be interpreted as it would not influence the search.
-	* searchmoves <move1> .... <movei>
-		restrict search to this moves only
-		Example: After "position startpos" and "go infinite searchmoves e2e4 d2d4"
-		the engine should only search the two moves e2e4 and d2d4 in the initial position.
-	* ponder
-		start searching in pondering mode.
-		Do not exit the search in ponder mode, even if it's mate!
-		This means that the last move sent in in the position string is the ponder move.
-		The engine can do what it wants to do, but after a "ponderhit" command
-		it should execute the suggested move to ponder on. This means that the ponder move sent by
-		the GUI can be interpreted as a recommendation about which move to ponder. However, if the
-		engine decides to ponder on a different move, it should not display any mainlines as they are
-		likely to be misinterpreted by the GUI because the GUI expects the engine to ponder
-	   on the suggested move.
-	* wtime <x>
-		white has x msec left on the clock
-	* btime <x>
-		black has x msec left on the clock
-	* winc <x>
-		white increment per move in mseconds if x > 0
-	* binc <x>
-		black increment per move in mseconds if x > 0
-	* movestogo <x>
-      there are x moves to the next time control,
-		this will only be sent if x > 0,
-		if you don't get this and get the wtime and btime it's sudden death
-	* depth <x>
-		search x plies only.
-	* nodes <x>
-	   search x nodes only,
-	* mate <x>
-		search for a mate in x moves
-	* movetime <x>
-		search exactly x mseconds
-	* infinite
-		search until the "stop" command. Do not exit the search without being told so in this mode!
-    
-* stop
-	stop calculating as soon as possible,
-	don't forget the "bestmove" and possibly the "ponder" token when finishing the search
+### go
++ Start calculating on the current position set up with the "position" command.
++ There are a number of commands that can follow this command, all will be sent in the same string.
++ If one command is not sent its value should be interpreted as it would not influence the search.
 
-* ponderhit
-	the user has played the expected move. This will be sent if the engine was told to ponder on the same move
-	the user has played. The engine should continue searching but switch from pondering to normal search.
+### searchmoves <move1> .... <movei>
++ Restrict search to this moves only
++ Example: After "position startpos" and "go infinite searchmoves e2e4 d2d4", the engine should only search the two moves e2e4 and d2d4 in the initial position.
 
-* quit
-	quit the program as soon as possible
+### ponder
++ Start searching in pondering mode.
++ Do not exit the search in ponder mode, even if it's mate!
++ This means that the last move sent in the position string is the ponder move.
++ The engine can do what it wants to do, but after a "ponderhit" command it should execute the suggested move to ponder on. This means that the ponder move sent by the GUI can be interpreted as a recommendation about which move to ponder. However, if the engine decides to ponder on a  different move, it should not display any main lines as they are likely to be misinterpreted by the GUI. This is because the GUI expects the engine to ponder on the suggested move.
+
+### wtime <x>
++ White has x msec left on the clock
+### btime <x>
++ black has x msec left on the clock
+### winc <x>
++ white increment per move in mseconds if x > 0
+### binc <x>
++ black increment per move in mseconds if x > 0
+### movestogo <x>
++ There are x moves to the next time control. 
++ This will only be sent if x > 0. 
++ If you don't get this and get the wtime and btime it's sudden death. 
+### depth <x>
++ Search x plies only.
+### nodes <x>
++ Search x nodes only. 
+### mate <x>
++ Search for a mate in x moves.
+### movetime <x>
++ Search exactly x mseconds
+### infinite
++ Search until the "stop" command. Do not exit the search without being told so in this mode!
+### stop
++ Stop calculating as soon as possible
++ Don't forget the "bestmove" and possibly the "ponder" token when finishing the search. 
+### ponderhit
++ The user has played the expected move. This will be sent if the engine was told to ponder on the same move the user has played. 
++ The engine should continue searching but switch from pondering to normal search.
+
+### quit
++ Quit the program as soon as possible.
 
 
 Engine to GUI:
