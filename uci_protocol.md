@@ -71,11 +71,11 @@ These are all the command the engine gets from the interface.
 ### register
 + This is the command to try to register an engine or to tell the engine that registration will be done later. This command should always be sent if the engine	has sent "registration error" st program startup.
 + The following tokens are allowed:
-	- later
+	#### later
 	   The user doesn't want to register the engine now.
-	- name <x>
+	#### name <x>
 	   The engine should be registered with the name <x>
-	- code <y>
+	#### code <y>
 	   The engine should be registered with the code <y>
 + Example:
 	- "register later"
