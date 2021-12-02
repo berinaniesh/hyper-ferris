@@ -37,14 +37,11 @@ Examples:  e2e4, e7e5, e1g1 (white short castling), e7e8q (for promotion)
 
 These are all the command the engine gets from the interface.
 
-+ uci
-	tell engine to use the uci (universal chess interface),
-	this will be sent once as a first command after program boot
-	to tell the engine to switch to uci mode.
-	After receiving the uci command the engine must identify itself with the "id" command
-	and send the "option" commands to tell the GUI which engine settings the engine supports if any.
-	After that the engine should send "uciok" to acknowledge the uci mode.
-	If no uciok is sent within a certain time period, the engine task will be killed by the GUI.
+### uci
++ Tell engine to use the UCI (Universal Chess Interface) protocol. This will be sent once as the first command after program boot to tell the engine to switch to UCI mode.
++ After receiving the uci command the engine must identify itself with the "id" command and send the "option" commands to tell the GUI which engine settings the engine supports if any.
++ After that the engine should send "uciok" to acknowledge the UCI mode.
++ If no "uciok" is sent within a certain time period, the engine task will be killed by the GUI.
 
 * debug [ on | off ]
 	switch the debug mode of the engine on and off.
