@@ -43,52 +43,43 @@ These are all the command the engine gets from the interface.
 + After that the engine should send "uciok" to acknowledge the UCI mode.
 + If no "uciok" is sent within a certain time period, the engine task will be killed by the GUI.
 
-* debug [ on | off ]
-	switch the debug mode of the engine on and off.
-	In debug mode the engine should send additional infos to the GUI, e.g. with the "info string" command,
-	to help debugging, e.g. the commands that the engine has received etc.
-	This mode should be switched off by default and this command can be sent
-	any time, also when the engine is thinking.
+### debug [ on | off ]
++ Switch the debug mode of the engine on and off.
++ In debug mode the engine should send additional infos to the GUI with the "info string" command to help debugging. For example, the commands that the engine has received etc.
++ This mode should be switched off by default and this command can be sent any time, also when the engine is thinking.
 
-* isready
-	this is used to synchronize the engine with the GUI. When the GUI has sent a command or
-	multiple commands that can take some time to complete,
-	this command can be used to wait for the engine to be ready again or
-	to ping the engine to find out if it is still alive.
-	E.g. this should be sent after setting the path to the tablebases as this can take some time.
-	This command is also required once before the engine is asked to do any search
-	to wait for the engine to finish initializing.
-	This command must always be answered with "readyok" and can be sent also when the engine is calculating
-	in which case the engine should also immediately answer with "readyok" without stopping the search.
+### isready
++ This is used to synchronize the engine with the GUI. When the GUI has sent a command or multiple commands that can take some time to complete. 
++ This command can be used to wait for the engine to be ready again or to ping the engine to find out if it is still alive.
++ E.g. this should be sent after setting the path to the tablebases as this can take some time.
++ This command is also required once before the engine is asked to do any search to wait for the engine to finish initializing.
++ This command must always be answered with "readyok" and can be sent also when the engine is calculating in which case the engine should also immediately answer with "readyok" without stopping the search.
 
-* setoption name <id> [value <x>]
-	this is sent to the engine when the user wants to change the internal parameters
-	of the engine. For the "button" type no value is needed.
-	One string will be sent for each parameter and this will only be sent when the engine is waiting.
-	The name and value of the option in <id> should not be case sensitive and can inlude spaces.
-	The substrings "value" and "name" should be avoided in <id> and <x> to allow unambiguous parsing,
-	for example do not use <name> = "draw value".
-	Here are some strings for the example below:
-	   "setoption name Nullmove value true\n"
-      "setoption name Selectivity value 3\n"
-	   "setoption name Style value Risky\n"
-	   "setoption name Clear Hash\n"
-	   "setoption name NalimovPath value c:\chess\tb\4;c:\chess\tb\5\n"
+### setoption name <id> [value <x>]
++ This is sent to the engine when the GUI wants to change the internal parameters of the engine. 
++ For the "button" type no value is needed.
++ One string will be sent for each parameter and this will only be sent when the engine is waiting.
++ The name and value of the option in <id> should not be case sensitive and can include spaces.
++ The substrings "value" and "name" should be avoided in <id> and <x> to allow unambiguous parsing. For example do not use <name> = "draw value".
++ Here are some strings for the example below:
+	- "setoption name Nullmove value true\n"
+	- "setoption name Selectivity value 3\n"
+	- "setoption name Style value Risky\n"
+	- "setoption name Clear Hash\n"
+	- "setoption name NalimovPath value c:\chess\tb\4;c:\chess\tb\5\n"
 
-* register
-	this is the command to try to register an engine or to tell the engine that registration
-	will be done later. This command should always be sent if the engine	has sent "registration error"
-	at program startup.
-	The following tokens are allowed:
-	* later
-	   the user doesn't want to register the engine now.
-	* name <x>
-	   the engine should be registered with the name <x>
-	* code <y>
-	   the engine should be registered with the code <y>
-	Example:
-	   "register later"
-	   "register name Stefan MK code 4359874324"
+### register
++ This is the command to try to register an engine or to tell the engine that registration will be done later. This command should always be sent if the engine	has sent "registration error" st program startup.
++ The following tokens are allowed:
+	#### later
+	   The user doesn't want to register the engine now.
+	#### name <x>
+	   The engine should be registered with the name <x>
+	#### code <y>
+	   The engine should be registered with the code <y>
++ Example:
+	- "register later"
+	- "register name Stefan MK code 4359874324"
 
 * ucinewgame
    this is sent to the engine when the next search (started with "position" and "go") will be from
