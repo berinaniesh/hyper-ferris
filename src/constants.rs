@@ -521,3 +521,4 @@ pub const ROOK_ATTACKS:[u64;64] = [
     9115426935197958144,
 ];
 pub static mut QUEEN_ATTACKS:[u64;64] = [0;64];
+pub static mut state: u32 = 1804289383;

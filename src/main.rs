@@ -168,19 +168,19 @@ fn set_bishop_attack_squares (square: i64) -> u64 {
     return attacks;
 }
 
-fn get_bit(bitboard: u64, square: u64) -> bool {
+fn get_bit (bitboard: u64, square: u64) -> bool {
     return if bitboard & (1 << square) > 0 {true} else {false};
 }
 
-fn set_bit(bitboard: &mut u64, square: u64) {
+fn set_bit (bitboard: &mut u64, square: u64) {
     *bitboard |= 1 << square;
 }
 
-fn pop_bit(bitboard: &mut u64, square: u64) {
+fn pop_bit (bitboard: &mut u64, square: u64) {
     if get_bit(*bitboard, square) {*bitboard ^= 1 << square;} else {return};
 }
 
-fn pop_least_significant_bit(bitboard: &mut u64) {
+fn pop_least_significant_bit (bitboard: &mut u64) {
     //Don't run it with bitboard = 0, thread panics due to underflow. 
         if *bitboard > 0 {*bitboard &= *bitboard - 1;}
 }
@@ -218,6 +218,24 @@ fn set_occupancy(index: i32, bits_in_mask: i32, mut attack_mask: u64) -> u64 {
     return occupancy;
 }
 
+fn get_random_u32_number () -> u32 {
+    unsafe {
+        let mut number: u32 = constants::state;
+        number ^= number << 13;
+        number ^= number >> 17;
+        number ^= number << 5;
+        constants::state = number;
+    return number;
+    }
+}
+
+fn get_random_u64_number () -> u64 {
+    unsafe {
+        let (n1, n2, n3, n4): (u64, u64, u64, u64);
+
+    }
+}
+
 fn print_bitboard (bitboard: u64) {
     for rank in 0..8 {
         print!("{}   ", 8-rank);
@@ -234,11 +252,6 @@ fn print_bitboard (bitboard: u64) {
 
 fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
-    for rank in 0..8 {
-        for file in 0..8 {
-            let square = rank*8 + file;
-            print!("{}, ", count_no_of_set_bits(set_rook_attack_squares(square)));
-        }
-        println!();
-    }
+    print_bitboard(get_random_u32_number() as u64);
+    print_bitboard(get_random_u32_number() as u64 & 0xffff);
 }
