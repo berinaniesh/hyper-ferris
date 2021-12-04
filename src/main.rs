@@ -5,21 +5,10 @@ mod rng;
 
 use {
     bit_manipulation::{get_bit, set_bit, pop_bit, pop_least_significant_bit, find_least_significant_bit},
-    attack_tables::{set_bishop_attack_squares, set_rook_attack_squares, magic_bishop_attacks, magic_rook_attacks},
+    attack_tables::{set_bishop_attack_squares, set_rook_attack_squares, magic_bishop_attacks, magic_rook_attacks, set_occupancy},
     rng::{get_random_u32_number, get_random_u64_number},
 };
 
-fn set_occupancy(index: i32, bits_in_mask: i32, mut attack_mask: u64) -> u64 {
-    let mut occupancy = 0u64;
-    for count in 0..bits_in_mask {
-        let square = find_least_significant_bit (attack_mask);
-        pop_bit (&mut attack_mask, square as u64);
-        if (index & (1<<count)) > 0 {
-            occupancy |= 1 << square;
-        }
-    }
-    return occupancy;
-}
 
 fn print_bitboard (bitboard: u64) {
     for rank in 0..8 {

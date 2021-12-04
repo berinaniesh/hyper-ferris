@@ -1,3 +1,6 @@
+use {
+    crate::bit_manipulation::{pop_bit, find_least_significant_bit}
+};
 
 pub fn magic_bishop_attacks (square: i64, blocker: u64) -> u64 {
     let mut attacks = 0;
@@ -165,4 +168,16 @@ pub fn set_bishop_attack_squares (square: i64) -> u64 {
     }
 
     return attacks;
+}
+
+pub fn set_occupancy (index: i32, bits_in_mask: i32, mut attack_mask: u64) -> u64 {
+    let mut occupancy = 0u64;
+    for count in 0..bits_in_mask {
+        let square = find_least_significant_bit (attack_mask);
+        pop_bit (&mut attack_mask, square as u64);
+        if (index & (1<<count)) > 0 {
+            occupancy |= 1 << square;
+        }
+    }
+    return occupancy;
 }
