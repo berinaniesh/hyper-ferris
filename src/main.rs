@@ -37,7 +37,8 @@ fn find_magic_number (square: i64, relevant_bits: i32, piece: usize) -> u64 {
 
     for _ in 0..100000000 {
         let magic_number: u64 = generate_magic_number();
-        if count_no_of_set_bits((attack_mask * magic_number) & 0xff00000000000000) < 6 {continue}
+        let product = attack_mask * magic_number;
+        if count_no_of_set_bits(product as u64 & 0xff00000000000000) < 6 {continue}
 
         for idx in 0..4096 {
             used_attacks[idx] = 0;
@@ -65,7 +66,13 @@ fn find_magic_number (square: i64, relevant_bits: i32, piece: usize) -> u64 {
     return 0;
 }
 
+fn init_magic_numbers () {
+    for square in 0..64 {
+        println!("{:#x}", find_magic_number(square, constants::ROOK_RELEVANT_BITS[square as usize], constants::ROOK))
+    }
+}
+
 fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
-    print_bitboard (generate_magic_number ());
+    init_magic_numbers();
 }

@@ -1,14 +1,14 @@
 
 //some random number
-static mut state: u32 = 1804289383;
+static mut STATE: u32 = 1804289383;
 
 fn get_random_u32_number () -> u32 {
     unsafe {
-        let mut number: u32 = state;
+        let mut number: u32 = STATE;
         number ^= number << 13;
         number ^= number >> 17;
         number ^= number << 5;
-        state = number;
+        STATE = number;
         return number;
     }
 }
