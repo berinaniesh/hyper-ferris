@@ -1,5 +1,9 @@
-//board constants
-//============================================================
+pub const WHITE: usize = 0;
+pub const BLACK: usize = 1;
+
+pub const ROOK: usize = 0;
+pub const BISHOP: usize = 1;
+
 pub const a8: usize = 0;
 pub const b8: usize = 1;
 pub const c8: usize = 2;
@@ -87,9 +91,6 @@ pub const SQUARES:[&str;64] = [
     "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1",
 ];
 
-pub const WHITE: usize = 0;
-pub const BLACK: usize = 1;
-
 pub const NOT_A_FILE: u64 = 18374403900871474942;
 pub const NOT_AB_FILE: u64 = 18229723555195321596;
 pub const NOT_GH_FILE: u64 = 4557430888798830399;
@@ -99,7 +100,7 @@ pub const NOT_H_FILE: u64 = 9187201950435737471;
 //attack tables
 //============================================================
 
-pub const BISHOP_RELEVANT_BITS: [u64;64] = [
+pub const BISHOP_RELEVANT_BITS: [i32;64] = [
     6, 5, 5, 5, 5, 5, 5, 6, 
     5, 5, 5, 5, 5, 5, 5, 5, 
     5, 5, 7, 7, 7, 7, 5, 5, 
@@ -110,7 +111,7 @@ pub const BISHOP_RELEVANT_BITS: [u64;64] = [
     6, 5, 5, 5, 5, 5, 5, 6, 
 ];
 
-pub const ROOK_RELEVANT_BITS: [u64;64] = [
+pub const ROOK_RELEVANT_BITS: [i32;64] = [
     12, 11, 11, 11, 11, 11, 11, 12, 
     11, 10, 10, 10, 10, 10, 10, 11, 
     11, 10, 10, 10, 10, 10, 10, 11, 
@@ -521,4 +522,3 @@ pub const ROOK_ATTACKS:[u64;64] = [
     9115426935197958144,
 ];
 pub static mut QUEEN_ATTACKS:[u64;64] = [0;64];
-pub static mut state: u32 = 1804289383;
