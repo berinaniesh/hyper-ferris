@@ -1,19 +1,28 @@
 
+//some random number
 static mut state: u32 = 1804289383;
 
-pub fn get_random_u32_number () -> u32 {
+fn get_random_u32_number () -> u32 {
     unsafe {
         let mut number: u32 = state;
         number ^= number << 13;
         number ^= number >> 17;
         number ^= number << 5;
         state = number;
-    return number;
+        return number;
     }
 }
 
-pub fn get_random_u64_number () -> u64 {   
+fn get_random_u64_number () -> u64 {   
         let [n1, n2, n3, n4]: [u64;4];
-        n1 = 6;
-        return n1;
+        //slicing off everything more significant than 16 bits
+        n1 = (get_random_u32_number() as u64) & 0xffff;
+        n2 = (get_random_u32_number() as u64) & 0xffff;
+        n3 = (get_random_u32_number() as u64) & 0xffff;
+        n4 = (get_random_u32_number() as u64) & 0xffff;
+        return n1 | (n2 << 16) | (n3 << 32) | (n4 << 48);
+}
+
+pub fn generate_magic_number () -> u64 {
+    return get_random_u64_number() & get_random_u64_number() & get_random_u64_number();
 }
