@@ -97,7 +97,7 @@ These are all the command the engine gets from the interface.
 + There are a number of commands that can follow this command, all will be sent in the same string.
 + If one command is not sent its value should be interpreted as it would not influence the search.
 
-### searchmoves <move1> .... <movei>
+### searchmoves \<move1\> .... \<move 2\>
 + Restrict search to this moves only
 + Example: After "position startpos" and "go infinite searchmoves e2e4 d2d4", the engine should only search the two moves e2e4 and d2d4 in the initial position.
 
