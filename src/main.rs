@@ -68,7 +68,11 @@ fn find_magic_number (square: i64, relevant_bits: i32, piece: usize) -> u64 {
 
 fn init_magic_numbers () {
     for square in 0..64 {
-        println!("{:#x}", find_magic_number(square, constants::ROOK_RELEVANT_BITS[square as usize], constants::ROOK))
+        //println!("{:#x}", find_magic_number(square, constants::ROOK_RELEVANT_BITS[square as usize], constants::ROOK));
+        println!("{}", find_magic_number(square, constants::ROOK_RELEVANT_BITS[square as usize], constants::ROOK))
+    }
+    for square in 0..64 {
+        println!("{}", find_magic_number(square, constants::BISHOP_RELEVANT_BITS[square as usize], constants::BISHOP))
     }
 }
 
