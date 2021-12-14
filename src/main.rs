@@ -37,7 +37,7 @@ fn find_magic_number (square: i64, relevant_bits: i32, piece: usize) -> u64 {
 
     for _ in 0..100000000 {
         let magic_number: u64 = generate_magic_number();
-        let product = attack_mask * magic_number;
+        let product = attack_mask.wrapping_mul(magic_number);
         if count_no_of_set_bits(product as u64 & 0xff00000000000000) < 6 {continue}
 
         for idx in 0..4096 {
@@ -45,17 +45,17 @@ fn find_magic_number (square: i64, relevant_bits: i32, piece: usize) -> u64 {
         }
         
         let mut index: i32 = 0;
-        let mut fail: i32 = 0;
+        let mut success: bool = true;
          
-        while fail !=0 && index < occupancy_indices as i32 {
+        while success && index < occupancy_indices as i32 {
             let magic_index: usize = ((occupancies[index as usize] * magic_number) >> (64 - relevant_bits)) as usize;
             if used_attacks[magic_index] == 0 {
                 used_attacks[magic_index] = attacks[index as usize];
             }
             else if used_attacks[magic_index] != attacks[index as usize] {
-                fail = 1;
+                success = false;
             }
-            if fail == 0 {
+            if success == true {
                 return magic_number;
             }
             index += 1;
