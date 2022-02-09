@@ -272,7 +272,7 @@ pub fn init_slider_attacks(piece: usize) {
 pub fn get_bishop_attacks(square: usize, mut occupancy: u64) -> u64 {
     unsafe {
         occupancy &= BISHOP_MASKS[square];
-        occupancy *= BISHOP_MAGIC_NUMBERS[square];
+        occupancy = occupancy.wrapping_mul(BISHOP_MAGIC_NUMBERS[square]);
         occupancy >>= 64 - BISHOP_RELEVANT_BITS[square];
         return BISHOP_ATTACKS[square][occupancy as usize];
     }
@@ -281,7 +281,7 @@ pub fn get_bishop_attacks(square: usize, mut occupancy: u64) -> u64 {
 pub fn get_rook_attacks(square: usize, mut occupancy: u64) -> u64 {
     unsafe {
         occupancy &= ROOK_MASKS[square];
-        occupancy *= ROOK_MAGIC_NUMBERS[square];
+        occupancy = occupancy.wrapping_mul(ROOK_MAGIC_NUMBERS[square]);
         occupancy >>= 64 - ROOK_RELEVANT_BITS[square];
         return ROOK_ATTACKS[square][occupancy as usize];
     }

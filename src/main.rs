@@ -26,6 +26,8 @@ fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
     attack_tables::init_slider_attacks(constants::BISHOP);
     attack_tables::init_slider_attacks(constants::ROOK);
-    let occupancy: u64 = 0;
+    let mut occupancy: u64 = 0;
+    set_bit(&mut occupancy, constants::g2 as u64);
     print_bitboard(attack_tables::get_bishop_attacks(constants::e4, occupancy));
+    print_bitboard(attack_tables::get_rook_attacks(constants::g4, occupancy));
 }
