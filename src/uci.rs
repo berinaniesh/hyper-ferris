@@ -1,1 +1,2 @@
 use board;
+pub struct
