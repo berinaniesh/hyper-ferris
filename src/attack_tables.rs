@@ -1,8 +1,10 @@
 use {
     crate::bit_manipulation::{pop_bit, find_least_significant_bit, count_no_of_set_bits},
-    crate::constants, 
+    crate::constants,
+    crate::constants::{BISHOP_ATTACKS, ROOK_ATTACKS, BISHOP_MASKS, ROOK_MASKS, BISHOP_MAGIC_NUMBERS, ROOK_MAGIC_NUMBERS, BISHOP_RELEVANT_BITS, ROOK_RELEVANT_BITS}, 
     crate::rng::generate_magic_number,
 };
+
 
 fn magic_bishop_attacks (square: i64, blocker: u64) -> u64 {
     let mut attacks = 0;
@@ -199,6 +201,7 @@ fn find_magic_number (square: i64, relevant_bits: i32, piece: usize) -> u64 {
     for _ in 0..100000000 {
         let magic_number: u64 = generate_magic_number();
         let product = attack_mask.wrapping_mul(magic_number);
+        // println!("Product is {}", product);
         if count_no_of_set_bits(product as u64 & 0xff00000000000000) < 6 {continue}
 
         for idx in 0..4096 {
@@ -234,5 +237,52 @@ pub fn init_magic_numbers () {
     println!("\n\n\n");
     for square in 0..64 {
         println!("{},", find_magic_number(square, constants::BISHOP_RELEVANT_BITS[square as usize], constants::BISHOP))
+    }
+}
+
+
+
+pub fn init_slider_attacks(piece: usize) {
+    unsafe {
+        for square in 0..64 {
+            BISHOP_MASKS[square] = set_bishop_attack_squares(square as i64);
+            ROOK_MASKS[square] = set_rook_attack_squares(square as i64);
+
+            let attack_mask: u64 = if piece == constants::BISHOP {BISHOP_MASKS[square]} else {ROOK_MASKS[square]};
+            let relevant_bits_count: u8 = count_no_of_set_bits(attack_mask);
+
+            let occupancy_indices: i32 = 1 << relevant_bits_count;
+
+            for index in 0..occupancy_indices {
+                if piece == constants::BISHOP {
+                    let occupancy: u64 = set_occupancy(index, relevant_bits_count as i32, attack_mask);
+                    let magic_index: u64 = (occupancy.wrapping_mul(BISHOP_MAGIC_NUMBERS[square])) >> (64 -BISHOP_RELEVANT_BITS[square]);
+                    BISHOP_ATTACKS[square][magic_index as usize] = magic_bishop_attacks(square as i64, occupancy);
+                }
+                else {
+                    let occupancy: u64 = set_occupancy(index, relevant_bits_count as i32, attack_mask);
+                    let magic_index: u64 = (occupancy.wrapping_mul(ROOK_MAGIC_NUMBERS[square])) >> (64 -ROOK_RELEVANT_BITS[square]);
+                    ROOK_ATTACKS[square][magic_index as usize] = magic_rook_attacks(square as i64, occupancy);
+                }
+            }
+        }
+    }
+}
+
+pub fn get_bishop_attacks(square: usize, mut occupancy: u64) -> u64 {
+    unsafe {
+        occupancy &= BISHOP_MASKS[square];
+        occupancy *= BISHOP_MAGIC_NUMBERS[square];
+        occupancy >>= 64 - BISHOP_RELEVANT_BITS[square];
+        return BISHOP_ATTACKS[square][occupancy as usize];
+    }
+}
+
+pub fn get_rook_attacks(square: usize, mut occupancy: u64) -> u64 {
+    unsafe {
+        occupancy &= ROOK_MASKS[square];
+        occupancy *= ROOK_MAGIC_NUMBERS[square];
+        occupancy >>= 64 - ROOK_RELEVANT_BITS[square];
+        return ROOK_ATTACKS[square][occupancy as usize];
     }
 }

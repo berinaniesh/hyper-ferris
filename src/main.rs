@@ -24,4 +24,8 @@ fn print_bitboard (bitboard: u64) {
 
 fn main() {
     println!("\n\n   Hyper Ferris 0.1.0\n");
+    attack_tables::init_slider_attacks(constants::BISHOP);
+    attack_tables::init_slider_attacks(constants::ROOK);
+    let occupancy: u64 = 0;
+    print_bitboard(attack_tables::get_bishop_attacks(constants::e4, occupancy));
 }
