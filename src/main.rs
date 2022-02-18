@@ -5,6 +5,7 @@ mod rng;
 
 use {
     bit_manipulation::{get_bit, set_bit, pop_bit, pop_least_significant_bit, find_least_significant_bit, count_no_of_set_bits},
+    std::io
 };
 
 
@@ -30,4 +31,6 @@ fn main() {
     set_bit(&mut occupancy, constants::g2 as u64);
     print_bitboard(attack_tables::get_bishop_attacks(constants::e4, occupancy));
     print_bitboard(attack_tables::get_rook_attacks(constants::g4, occupancy));
+    //let mut guess = String::new();
+    //io::stdin().read_line(&mut guess).expect("failed to readline");
 }
